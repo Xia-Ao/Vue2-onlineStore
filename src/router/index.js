@@ -1,15 +1,26 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
+import Vue from 'vue';
+import Router from 'vue-router';
+import GoodsList from '@/components/goodslist/goodslist';
+import Cart from '@/components/cart/cart';
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      name: 'GoodsList',
+      component: GoodsList
+    },
+    {
+      path: '/goodsList',
+      name: 'GoodsList',
+      component: GoodsList
+    },
+    {
+      path: '/cart',
+      name: 'Cart',
+      component: Cart
     }
   ]
-})
+});
