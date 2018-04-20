@@ -21,11 +21,11 @@
         <div class="goodsList-container">
           <li v-for="(item) in goodsList" :key="item.id">
             <div class="pic">
-              <a href="#"><img v-lazy="'./../static/img/'+item.prodcutImg" alt=""></a>
+              <a href="#"><img v-lazy="'./../static/img/'+item.productImage" alt=""></a>
             </div>
             <div class="main">
               <div class="name">{{item.productName}}</div>
-              <div class="price">{{item.prodcutPrice}}</div>
+              <div class="price">{{item.salePrice}}</div>
               <div class="btn-area">
                 <a href="">加入购物车</a>
               </div>
@@ -69,9 +69,9 @@
     },
     methods: {
       getGoodsList () {
-        axios.get('./../static/goods.json').then(result => {
+        axios.get('/goods').then(result => {
           let res = result.data;
-          this.goodsList = res.result;
+          this.goodsList = res.result.list;
           console.log(this.goodsList);
         }).catch(err => {
           console.log('error' + err);

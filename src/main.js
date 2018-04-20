@@ -10,7 +10,7 @@ Vue.config.productionTip = false;
 Vue.use(VueLazyload, {
   // preLoad: 1.3,
   // error: 'dist/error.png',
-  loading: '/static/img/loading-avg/loading-bars.svg',
+  loading: '/static/img/loading-avg/loading-bars.svg'
   // attempt: 1
 });
 
