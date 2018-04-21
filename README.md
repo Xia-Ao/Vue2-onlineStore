@@ -19,3 +19,28 @@ npm run build --report
 ```
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+
+### 技术栈
+
+
+### 插件
+
+[axios](https://www.kancloud.cn/yunye/axios) 请求http
+
+[mongoose](http://mongoosejs.com/docs/api.html) 操作mongodb数据库
+
+[express](http://expressjs.com/zh-cn/4x/api.html) node框架
+
+[ejs](https://www.npmjs.com/package/ejs) 将jade转化为html
+
+[vue-lazyload](https://www.npmjs.com/package/vue-infinite-scroll) 懒加载
+
+[Font Awesome](http://www.fontawesome.com.cn/) 图标库使用
+
+```js
+`npm install font-awesome --save`  
+ // 在main.js里添加  
+`import 'font-awesome/css/font-awesome.css'`
+```
+

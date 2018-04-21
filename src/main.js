@@ -4,13 +4,17 @@ import Vue from 'vue';
 import App from './App';
 import router from './router';
 import VueLazyload from 'vue-lazyload';
+import infiniteScroll from 'vue-infinite-scroll';
+import 'font-awesome/css/font-awesome.css';
+
+Vue.use(infiniteScroll);
 
 Vue.config.productionTip = false;
 
 Vue.use(VueLazyload, {
   // preLoad: 1.3,
   // error: 'dist/error.png',
-  loading: '/static/img/loading-avg/loading-bars.svg'
+  loading: '/static/img/loading-svg/loading-bars.svg'
   // attempt: 1
 });
 
