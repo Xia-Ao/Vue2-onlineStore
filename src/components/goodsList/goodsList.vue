@@ -32,8 +32,8 @@
                         <div class="main">
                             <div class="name">{{item.productName}}</div>
                             <div class="price">{{item.salePrice}}</div>
-                            <div class="btn-area">
-                                <a href="">加入购物车</a>
+                            <div>
+                                <a  class="btn-area" @click="addCart(item.productId)">加入购物车</a>
                             </div>
                         </div>
                     </li>
@@ -126,9 +126,11 @@
             sortGoods (sort) {
                 if (sort) {
                     this.sortFlag = !this.sortFlag;
-                    if (this.sortFlag)
+                    if (this.sortFlag) {
                         this.sort = 1;
-                    else this.sort = -1;
+                    } else {
+                        this.sort = -1;
+                    }
                     this.page = 1;
                 }
                 this.getGoodsList();
@@ -139,13 +141,26 @@
                     this.page++;
                     this.getGoodsList(true);
                 }, 100);
+            },
+            addCart (productId) {
+                axios.post('/goods/addCart', {
+                    productId: productId
+                }).then((res) => {
+                    let result = res.data;
+                    if (result.status === '0') {
+                        alert('成功');
+                    } else {
+                        alert('失败', result.msg);
+                    }
+                }).catch((err) => {
+                    console.log(err);
+                });
             }
         }
     };
 </script>
 
 <style lang="stylus">
-
     .goods {
         width: 1200px
         margin: auto
@@ -162,11 +177,11 @@
                 float: right
                 font-size: 16px
                 color: #605f5f
-                .defaultPrice{
+                .defaultPrice {
                     color: #ee7a23
                 }
-                a{
-                    margin:0 5px
+                a {
+                    margin: 0 5px
                 }
             }
         }
@@ -242,6 +257,7 @@
                                 color: #d1434a
                             }
                             .btn-area {
+                                display: block
                                 margin: 10px 10px 10px 0
                                 height: 40px
                                 padding: 0 10px

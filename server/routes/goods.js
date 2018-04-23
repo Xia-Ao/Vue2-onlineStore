@@ -79,4 +79,71 @@ router.get('/', (req, res, next) => {
     });
 });
 
+// 加入到购物车
+router.post('/addCart', (req, res, next) => {
+    let userId = '100000077';
+    let productId = req.body.productId;
+    let User = require('../modules/users');
+    User.findOne({userId: userId}, (err, userGoods) => {
+            if (err) {
+                res.json({
+                    status: '1',
+                    msg: err.message
+                });
+            } else {
+                // 获取到用户所有的商品
+                console.log('cartList', userGoods.cartList);
+                if (userGoods) {
+                    let goodsItem = '';
+                    // 遍历查找用户商品里面是否有相同的商品
+                    userGoods.cartList.forEach((item) => {
+                        if (item.productId === productId) {
+                            goodsItem = item;
+                            item.productNum++;
+                        }
+                    });
+                    if (goodsItem) {
+                        saveDoc(userGoods, res);
+                    } else {
+                        Goods.findOne({productId: productId}, (err2, goodsDoc) => {
+                            if (err2) {
+                                res.json({
+                                    status: '1',
+                                    msg: err2.message
+                                });
+                            } else {
+                                if (goodsDoc) {
+                                    goodsDoc.productNum = 1;
+                                    goodsDoc.checked = true;
+                                    userGoods.cartList.push(goodsDoc);
+                                    saveDoc(userGoods, res);
+                                }
+                            }
+                        });
+                    }
+                }
+            }
+        }
+    );
+});
+
+
+function saveDoc (doc, res) {
+    // 保存操作
+    doc.save((err, doc) => {
+        if (err) {
+            res.json({
+                status: '1',
+                msg: err.message
+            });
+        } else {
+            res.json({
+                status: '0',
+                msg: '添加购物车成功',
+                result: 'success'
+            });
+        }
+    });
+}
+
 module.exports = router;
