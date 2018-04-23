@@ -12,7 +12,7 @@ let userSchema = new Schema({
             'productName': String,
             'salePrice': Number,
             'productImage': String,
-            'checked': Boolean,
+            'checked': String,
             'productNum': Number
         }
     ],

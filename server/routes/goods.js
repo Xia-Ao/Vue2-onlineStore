@@ -16,7 +16,7 @@ mongoose.connection.on('disconnected', () => {
     console.log('connect disconnected');
 });
 
-router.get('/', (req, res, next) => {
+router.get('/list', (req, res, next) => {
     // 获取接口请求参数
     let sort = parseInt(req.param('sort'));
     let page = parseInt(req.param('page'));

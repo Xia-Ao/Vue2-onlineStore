@@ -44,3 +44,8 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 `import 'font-awesome/css/font-awesome.css'`
 ```
 
+[Element UI](http://element-cn.eleme.io/#/zh-CN/component/)  样式库
+
+### 技术点
+
+刷新页面时使用cookies里面的数据进行登录验证

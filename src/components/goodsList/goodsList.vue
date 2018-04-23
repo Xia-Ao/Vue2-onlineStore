@@ -32,8 +32,8 @@
                         <div class="main">
                             <div class="name">{{item.productName}}</div>
                             <div class="price">{{item.salePrice}}</div>
-                            <div>
-                                <a  class="btn-area" @click="addCart(item.productId)">加入购物车</a>
+                            <div class="addCart">
+                                <a class="btn-area" @click="addCart(item.productId)">加入购物车</a>
                             </div>
                         </div>
                     </li>
@@ -52,7 +52,6 @@
     import axios from 'axios';
 
     export default {
-//    name: 'GoodsList',
         data () {
             return {
                 goodsList: [],
@@ -93,7 +92,7 @@
                     priceLevel: this.priceChecked
                 };
                 this.imgLoading = true;
-                axios.get('/goods', {
+                axios.get('/goods/list', {
                     params: param
                 }).then(result => {
                     let res = result.data;
@@ -149,8 +148,10 @@
                     let result = res.data;
                     if (result.status === '0') {
                         alert('成功');
+                    } else if (result.status === '10001') {
+                        alert(result.msg);
                     } else {
-                        alert('失败', result.msg);
+                        alert('加入失败', result.msg);
                     }
                 }).catch((err) => {
                     console.log(err);
@@ -262,11 +263,18 @@
                                 height: 40px
                                 padding: 0 10px
                                 line-height: 40px
+                                transition: all 0.5s ease-out
+                                background: #fff
                                 border: 1px solid #d1434a
                                 text-align: center
                                 color: #d1434a
                                 font-size: 14px
                                 font-weight: bold
+
+                            }
+                            .btn-area:hover {
+                                transition: all 0.5s ease-out
+                                background: #fb9f96
                             }
                         }
                     }
