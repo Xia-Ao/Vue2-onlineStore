@@ -48,4 +48,16 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 
 ### 技术点
 
-刷新页面时使用cookies里面的数据进行登录验证
+#### 刷新页面时使用cookies里面的数据进行登录验证
+
+当用户登录后，用户信息存储在cookies里面，刷新页面时，系统里面的所有变量都会被init，此时从cookies里面获取用户信息，相当于重新登录，刷新之后还是原用户，使用登录拦截实现。
+
+#### [父子组件之间相互通信](https://cn.vuejs.org/v2/guide/components.html#Prop)
+* 父组件使用`v-bind:data="data"`对数据实现绑定，子组件使用`props:['data']`实现接收，如果子组件想要实时监听父组件数据的变化，可以使用watch监听
+* 子组件使用`$emit('childData')`向父组件传递数据，父组件使用`v-on:childData="handle"`监听子组件传递过来的数据
+
+#### slot插槽的使用
+尤其针对于面包屑这类场景，十分有效
+
+
+

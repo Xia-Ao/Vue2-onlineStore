@@ -1,5 +1,8 @@
 <template>
     <div class="goods">
+        <nav-bread>
+            <span>goodsList</span>
+        </nav-bread>
         <div class="filter-nav">
             <div class="sort">
                 <span>Sort by: </span>
@@ -45,11 +48,36 @@
                 </div>
             </div>
         </div>
+        <!--购物车dialog-->
+        <el-dialog title="添加购物车" :visible.sync="cartDialogShow" width="30%" :before-close="handleClose"
+                   class="cart-dialog" center>
+            <div class="noLogin" v-if="!login">
+                <div class="tips"><span>{{cartTips}}</span></div>
+                <div>
+                    <span slot="footer" class="dialog-footer">
+                        <el-button type="warning" @click="handleClose">关闭</el-button>
+                    </span>
+                </div>
+
+            </div>
+            <div class="alreadyLogin" v-if="login">
+                <div class="tips"><i class="el-icon-success"></i><span>{{cartTips}}</span></div>
+                <div>
+                    <span slot="footer" class="dialog-footer">
+                        <el-button type="primary" @click="handleClose">继续购物</el-button>
+                        <el-button type="danger"><router-link to="/cart" class="toCart">查看购物车</router-link></el-button>
+                    </span>
+                </div>
+
+            </div>
+        </el-dialog>
     </div>
 </template>
 
 <script>
     import axios from 'axios';
+    import NavBread from '@/components/navBread/navBread';
+    import Dialog from '@/components/dialog/dialog';
 
     export default {
         data () {
@@ -77,7 +105,10 @@
                 pageSize: 8,
                 sort: 1,
                 busy: true,
-                imgLoading: true
+                imgLoading: true,
+                cartDialogShow: false,
+                login: false,
+                cartTips: ''
             };
         },
         mounted: function () {
@@ -105,7 +136,6 @@
                             } else {
                                 this.busy = false;
                             }
-                            console.log('busy:', this.busy, res.result.count);
                         } else {
                             this.goodsList = res.result.list;
                             this.busy = false;
@@ -146,17 +176,25 @@
                     productId: productId
                 }).then((res) => {
                     let result = res.data;
+                    this.cartDialogShow = true;
                     if (result.status === '0') {
-                        alert('成功');
+                        this.login = true;
+                        this.cartTips = result.msg;
                     } else if (result.status === '10001') {
-                        alert(result.msg);
-                    } else {
-                        alert('加入失败', result.msg);
+                        this.login = false;
+                        this.cartTips = result.msg;
                     }
                 }).catch((err) => {
                     console.log(err);
                 });
+            },
+            handleClose (done) {
+                this.cartDialogShow = false;
             }
+        },
+        components: {
+            'nav-bread': NavBread,
+            'cart-dialog': Dialog
         }
     };
 </script>
@@ -282,6 +320,30 @@
                 .imgLoading {
                     margin: auto
                     width: 200px
+                }
+            }
+        }
+        .cart-dialog {
+            .noLogin, .alreadyLogin {
+                .tips {
+                    height: 50px
+                    color: #959595
+                    font-size: 18px
+                    i {
+                        color: #ff6c15
+                        margin-right: 20px
+                    }
+                }
+                div {
+                    text-align: center
+                }
+                button {
+                    width: 40%
+                }
+            }
+            .alreadyLogin {
+                .toCart:hover {
+                    color: #fff
                 }
             }
         }

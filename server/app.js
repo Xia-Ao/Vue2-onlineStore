@@ -33,7 +33,7 @@ app.use((req, res, next) => {
         } else {
             res.json({
                 status: '10001',
-                msg: '当前未登录',
+                msg: '当前用户未登录，请登录！',
                 result: ''
             });
         }

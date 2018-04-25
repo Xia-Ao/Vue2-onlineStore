@@ -15,19 +15,14 @@
                     <a href="javascript:void(0)" class="item navbar-link logout" v-if="currentUserName"
                        @click="loginOut(currentUserName)">Logout</a>
                     <div class="item shopping-cart">
-                        <i class="fa fa-shopping-cart"></i>
+                        <el-badge :value="12">
+                            <router-link to="/cart"><i class="fa fa-shopping-cart"></i></router-link>
+                        </el-badge>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="bread">
-            <div class="nav-bread">
-                <a href="/" class="slot">Home</a>
-                <span>/</span>
-                <span slot="name">GoodsList</span>
-            </div>
-        </div>
-
+        <!-- 登录 -->
         <el-dialog title="登录" :visible.sync="DialogVisible" width="30%" center class="dialog-login">
 
             <el-form ref="form" :model="form" status-icon :rules="rules" label-width="80px" class="demo-ruleForm">
@@ -40,7 +35,7 @@
                     <el-input v-model="form.userName"></el-input>
                 </el-form-item>
                 <el-form-item label="密码" prop="userPwd">
-                    <el-input v-model="form.userPwd" type="password"></el-input>
+                    <el-input v-model="form.userPwd" type="password" @keyup.enter="submitForm('form')"></el-input>
                 </el-form-item>
 
                 <el-form-item>
@@ -180,6 +175,9 @@
                 }
                 .shopping-cart {
                     font-size: 2em
+                    sup {
+                        top: 15px
+                    }
                 }
             }
         }
