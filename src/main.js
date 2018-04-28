@@ -11,6 +11,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 import Vuex from 'vuex';
 import store from './store';
 import {currency} from './util/currency';
+import util from './util/util';
 
 
 Vue.config.productionTip = false;
@@ -25,6 +26,7 @@ Vue.use(Vuex);
 Vue.use(ElementUI);
 Vue.use(infiniteScroll);
 Vue.filter('currency', currency);
+Vue.prototype.util = util;
 
 /* eslint-disable no-new */
 new Vue({

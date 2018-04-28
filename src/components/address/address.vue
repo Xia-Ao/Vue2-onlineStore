@@ -139,6 +139,9 @@
                 ;
         },
         mounted () {
+            if (!this.util.refresh()) {
+                this.$router.push({path: '/'});
+            }
             this.menuShow(0);
             this.menuHidden(1);
             this.menuHidden(2);

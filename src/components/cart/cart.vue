@@ -76,6 +76,9 @@
             };
         },
         mounted () {
+            if (!this.util.refresh()) {
+                this.$router.push({path: '/'});
+            }
             this.init();
         },
         computed: {

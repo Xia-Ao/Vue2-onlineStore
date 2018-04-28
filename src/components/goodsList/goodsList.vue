@@ -113,6 +113,9 @@
             };
         },
         mounted: function () {
+            if (!this.util.refresh()) {
+                this.$router.push({path: '/'});
+            }
             this.getGoodsList();
         },
         methods: {
