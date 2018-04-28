@@ -34,7 +34,7 @@
                         </div>
                         <div class="main">
                             <div class="name">{{item.productName}}</div>
-                            <div class="price">{{item.salePrice}}</div>
+                            <div class="price">{{item.salePrice | currency('￥')}}</div>
                             <div class="addCart">
                                 <a class="btn-area" @click="addCart(item.productId)">加入购物车</a>
                             </div>
@@ -78,6 +78,7 @@
     import axios from 'axios';
     import NavBread from '@/components/navBread/navBread';
     import Dialog from '@/components/dialog/dialog';
+    import {mapMutations} from 'vuex';
 
     export default {
         data () {
@@ -115,6 +116,7 @@
             this.getGoodsList();
         },
         methods: {
+            ...mapMutations(['add', 'reduce']),
             getGoodsList (flag) {
                 let param = {
                     page: this.page,
@@ -180,6 +182,7 @@
                     if (result.status === '0') {
                         this.login = true;
                         this.cartTips = result.msg;
+                        this.add(1);    // 购物车数量变化
                     } else if (result.status === '10001') {
                         this.login = false;
                         this.cartTips = result.msg;

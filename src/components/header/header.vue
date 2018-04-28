@@ -8,22 +8,26 @@
                 </div>
                 <div class="navbar-right-container">
                     <span class="item user" v-if="currentUserName">{{currentUserName}}</span>
-                    <el-button type="text" @click="DialogVisible = true" class="item navbar-link login"
+                    <el-button type="text" @click="registerType" class="item navbar-link login"
+                               v-if="!currentUserName">Register
+                    </el-button>
+                    <el-button type="text" @click="loginType" class="item navbar-link login"
                                v-if="!currentUserName">Login
                     </el-button>
 
                     <a href="javascript:void(0)" class="item navbar-link logout" v-if="currentUserName"
                        @click="loginOut(currentUserName)">Logout</a>
                     <div class="item shopping-cart">
-                        <el-badge :value="12">
-                            <router-link to="/cart"><i class="fa fa-shopping-cart"></i></router-link>
+                        <router-link to="/cart"><i class="fa fa-shopping-cart"></i></router-link>
+                        <el-badge :value="count" v-show="count">
                         </el-badge>
                     </div>
                 </div>
             </div>
         </div>
         <!-- 登录 -->
-        <el-dialog title="登录" :visible.sync="DialogVisible" width="30%" center class="dialog-login">
+        <el-dialog v-bind:title="dialogType ? '登录' : '新用户注册'" :visible.sync="DialogVisible" width="30%" center
+                   class="dialog-login">
 
             <el-form ref="form" :model="form" status-icon :rules="rules" label-width="80px" class="demo-ruleForm">
                 <el-form-item>
@@ -39,22 +43,41 @@
                 </el-form-item>
 
                 <el-form-item>
-                    <el-button type="primary" @click="submitForm('form')">登录</el-button>
+                    <el-button type="primary" @click="submitForm('form',dialogType)">
+                        {{dialogType ? '登录' : '注册'}}
+                    </el-button>
                     <el-button @click="resetForm('form')">重置</el-button>
                 </el-form-item>
             </el-form>
-            <!--<span slot="footer" class="dialog-footer">-->
-            <!--&lt;!&ndash;<el-button @click="DialogVisible = false">取 消</el-button>&ndash;&gt;-->
-            <!--&lt;!&ndash;<el-button type="primary" @click="DialogVisible = false">确 定</el-button>&ndash;&gt;-->
-            <!--</span>-->
-
         </el-dialog>
+        <!-- 注册 -->
+        <!--<el-dialog title="新用户注册" :visible.sync="registerDialog" width="30%" center class="dialog-login">
 
+            <el-form ref="newUserForm" :model="newUserForm" status-icon :rules="rules" label-width="80px" class="demo-ruleForm">
+                <el-form-item>
+                    <span v-if="loginFail" class="login-fail">
+                        <i class="fa fa-exclamation-triangle"></i>{{newUserForm.errTips}}
+                    </span>
+                </el-form-item>
+                <el-form-item label="用户名" prop="userName">
+                    <el-input v-model="newUserForm.userName"></el-input>
+                </el-form-item>
+                <el-form-item label="密码" prop="userPwd">
+                    <el-input v-model="newUserForm.userPwd" type="password" @keyup.enter="submitForm('form')"></el-input>
+                </el-form-item>
+
+                <el-form-item>
+                    <el-button type="primary" @click="submitForm('newUserForm')">登录</el-button>
+                    <el-button @click="resetForm('newUserForm')">重置</el-button>
+                </el-form-item>
+            </el-form>
+        </el-dialog>-->
     </div>
 </template>
 
 <script>
     import axios from 'axios';
+    import {mapState, mapMutations} from 'vuex';
 
     export default {
         name: 'Header',
@@ -62,6 +85,7 @@
             return {
                 msg: 'Welcome to Your header',
                 DialogVisible: false,
+                dialogType: true,  // 默认为true登录 false为注册
                 loginFail: false,
                 form: {
                     userPwd: '',
@@ -84,15 +108,36 @@
         mounted () {
             this.loginCheck();
         },
+        computed: {
+            ...mapState({
+                count: state => state.cart.productCount
+            })
+        },
+
         methods: {
-            submitForm (formName) {
+            ...mapMutations({
+                countInit: 'countInit'
+            }),
+            submitForm (formName, type) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        this.login();
+                        if (type) {
+                            this.login();
+                        } else {
+                            this.register();
+                        }
                     } else {
                         return false;
                     }
                 });
+            },
+            registerType () {
+                this.DialogVisible = true;
+                this.dialogType = false;
+            },
+            loginType () {
+                this.DialogVisible = true;
+                this.dialogType = true;
             },
             resetForm (formName) {
                 this.$refs[formName].resetFields();
@@ -108,6 +153,8 @@
                         this.DialogVisible = false;
                         this.form.errTips = '';
                         this.currentUserName = res.result.userName;
+                        // 向store.state.cart传初值
+                        this.countInit(res.result.cartList.length);
                     } else {
                         this.loginFail = true;
                         this.form.errTips = res.msg;
@@ -119,8 +166,34 @@
                     let res = response.data;
                     if (res.status === '0') {
                         this.currentUserName = '';
+                        this.countInit(0);
                     } else {
                         alert('登出失败');
+                    }
+                });
+            },
+            register () {
+                let id = Math.floor(Math.random() * Math.pow(10, 9));
+                axios.post('/users/register', {
+                    userId: id,
+                    userName: this.form.userName,
+                    userPwd: this.form.userPwd
+                }).then((response) => {
+                    let res = response.data;
+                    if (res.status === '0') {
+                        this.loginFail = false;
+                        this.DialogVisible = false;
+                        this.form.errTips = '';
+                        this.$message({
+                            message: '注册成功！请登录！',
+                            type: 'success'
+                        });
+                    } else if (res.status === '2') {
+                        this.loginFail = true;
+                        this.form.errTips = res.msg;
+                    } else {
+                        this.loginFail = true;
+                        this.form.errTips = '未知错误';
                     }
                 });
             },
@@ -128,7 +201,12 @@
                 axios.get('/users/loginCheck').then((response) => {
                     let res = response.data;
                     if (res.status === '0') {
-                        this.currentUserName = res.result;
+                        this.currentUserName = res.result.userName;
+                        // 向store.state.cart传初值
+                        this.countInit(res.result.cartList.length);
+                    } else if (res.status === '1') {
+                        this.currentUserName = '';
+                        this.countInit(0);
                     }
                 });
             }
@@ -174,9 +252,12 @@
                     line-height: 0
                 }
                 .shopping-cart {
+                    position: relative
                     font-size: 2em
                     sup {
-                        top: 15px
+                        position: absolute
+                        top: -20px
+                        left: -15px
                     }
                 }
             }

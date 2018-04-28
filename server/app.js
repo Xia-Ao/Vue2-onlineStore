@@ -28,7 +28,8 @@ app.use((req, res, next) => {
     if (req.cookies.userId) {
         next();
     } else {
-        if (req.originalUrl === '/users/login' || req.originalUrl === '/users/loginOut' || req.path === '/goods/list') {
+        if (req.originalUrl === '/users/login' || req.originalUrl === '/users/loginOut' ||
+            req.originalUrl === '/users/register' || req.path === '/goods/list') {
             next();
         } else {
             res.json({

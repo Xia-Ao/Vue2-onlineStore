@@ -3,6 +3,8 @@ import Router from 'vue-router';
 import GoodsList from '@/components/goodslist/goodslist';
 import Cart from '@/components/cart/cart';
 import Address from '@/components/address/address';
+import Order from '@/components/order/order';
+import OrderFinish from '@/components/orderFinish/orderFinish';
 
 Vue.use(Router);
 
@@ -27,6 +29,16 @@ export default new Router({
             path: '/address',
             name: 'address',
             component: Address
+        },
+        {
+            path: '/order',
+            name: 'order',
+            component: Order
+        },
+        {
+            path: '/orderFinish',
+            name: 'orderFinish',
+            component: OrderFinish
         }
     ]
 });

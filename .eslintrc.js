@@ -33,6 +33,9 @@ module.exports = {
         'space-infix-ops': 1,  //要求操作符周围有空格，否则则警告
         'no-unused-vars': 1, //禁止出现未使用过的变量,否则则警告
         'no-cond-assign': [2, "always"], // 在条件判读语句中禁止使用条件赋值
-        'no-trailing-spaces':0 // 允许空行留白
+        'no-trailing-spaces': 0, // 允许空行留白
+        'no-multi-spaces': 0,  //不允许多余的空白
+        'spaced-comment': 0,     //不检查注释的空格
+        'no-extend-native': 0   //允许扩展本地对象
     }
 }

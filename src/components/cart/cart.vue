@@ -30,13 +30,13 @@
                                     <span>{{item.productName}}</span>
                                 </div>
                             </li>
-                            <li class="price">{{item.salePrice}}</li>
+                            <li class="price">{{item.salePrice | currency('￥')}}</li>
                             <li class="quantity">
                                 <el-input-number v-model="item.productNum" @change="productNumChange(item)" :min="1"
                                                  label="描述文字" size="small">
                                 </el-input-number>
                             </li>
-                            <li class="subtotal">{{item.salePrice * item.productNum}}</li>
+                            <li class="subtotal">{{item.salePrice * item.productNum | currency('￥')}}</li>
                             <li class="edit"><a @click="deleteGoods(item.productId)"><i
                                 class="el-icon-delete"></i></a>
                             </li>
@@ -66,6 +66,7 @@
 <script>
     import axios from 'axios';
     import NavBread from '@/components/navBread/navBread';
+    import {mapMutations} from 'vuex';
 
     export default {
         data () {
@@ -89,16 +90,22 @@
             }
         },
         methods: {
+            ...mapMutations(['add', 'reduce']),
             init () {
                 axios.get('users/cartList')
                     .then((response) => {
                         let res = response.data;
                         if (res.status === '0') {
                             this.goods = res.result;
-                            console.log(this.goods[0].checked, typeof (this.goods[0].checked));
-                            console.log('购物车列表', res.result);
-                        } else {
-                            console.log('购物车获取失败');
+                            if (this.goods.length) {
+                                this.goods.forEach((item) => {
+                                    if (!item.checked) {
+                                        this.checkAll = false;
+                                    }
+                                });
+                            } else {
+                                this.checkAll = false;
+                            }
                         }
                     });
             },
@@ -116,7 +123,8 @@
                                 type: 'warning',
                                 message: '删除成功!'
                             });
-                            this.init();
+                            this.init();    // 重新加载购物车
+                            this.reduce(1);    // 购物车数量变化
                         } else {
                             this.$message({
                                 type: 'warning ',
@@ -139,7 +147,6 @@
                     }).then((res) => {
                     res = res.data;
                     if (res.status === '0') {
-                        console.log('shuliang gaibian');
                     }
                 });
             },
@@ -157,16 +164,23 @@
             },
             checkOut (totalPrice) {
                 if (totalPrice) {
-                    let goodsList = [];
+                    let idList = [];
                     this.goods.forEach((item, index) => {
                         if (item.checked) {
-                            goodsList.push(item);
+                            idList.push(item.productId);
                         }
                     });
+                    // 改变checked
+                    axios.post('/users/checkOut', {idList: idList})
+                        .then((res) => {
+                            res = res.data;
+                            if (res.status === '0') {
+
+                            }
+                        });
                     // 也可以用router-link
                     this.$router.push({
-                        name: 'address',
-                        params: {goodsList}
+                        name: 'address'
                     });
                 }
             }
@@ -188,7 +202,6 @@
 
     .title {
         height: 100px
-        background: #ccc
         line-height: 150px
         font-size: 2em;
         font-weight: 700
@@ -248,7 +261,6 @@
             }
             ul {
                 height: 100%
-
                 position: relative
                 li {
                     height: 100%

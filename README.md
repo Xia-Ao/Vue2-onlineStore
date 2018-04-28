@@ -38,6 +38,8 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 
 [Font Awesome](http://www.fontawesome.com.cn/) 图标库使用
 
+[Vuex数据管理](https://vuex.vuejs.org/zh-cn/state.html)
+
 ```js
 `npm install font-awesome --save`  
  // 在main.js里添加  
@@ -59,5 +61,17 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 #### slot插槽的使用
 尤其针对于面包屑这类场景，十分有效
 
+#### Vuex管理右上角购物车商品种类数量
+登录、刷新，登录数量变化，添加购物车，删除商品数量变化
+
+建立一个全局的数据仓库store，封装在状态树里面state，所有组件共享，所有组件都可以操作，一旦状态变化，所有组件都可以接受到变化，实现数据在组件间的实时共享。
+
+以前使用`$emit, $on`在不同组件之间传递数据非常麻烦。
 
 
+
+
+
+### 坑
+#### 接口返回数据类型
+使用接口请求返回来的数据类型，一般都是String类型，Number类型一般会做隐式转换，但是对于Boolean类型的数据，需要看接口怎么定义的，如果定义的是String类型的`'true' 'false'`,接收到数据要做类型转换。

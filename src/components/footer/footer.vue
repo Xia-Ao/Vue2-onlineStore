@@ -32,6 +32,9 @@
             color: #737373
             line-height: 70px
             font-size: 14px
+            a{
+                color: #308dff
+            }
         }
     }
 

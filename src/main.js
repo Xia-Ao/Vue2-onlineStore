@@ -9,6 +9,8 @@ import 'font-awesome/css/font-awesome.css';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import Vuex from 'vuex';
+import store from './store';
+import {currency} from './util/currency';
 
 
 Vue.config.productionTip = false;
@@ -22,11 +24,13 @@ Vue.use(VueLazyload, {
 Vue.use(Vuex);
 Vue.use(ElementUI);
 Vue.use(infiniteScroll);
+Vue.filter('currency', currency);
 
 /* eslint-disable no-new */
 new Vue({
     el: '#app',
     router,
+    store,
     components: {App},
     template: '<App/>'
 });

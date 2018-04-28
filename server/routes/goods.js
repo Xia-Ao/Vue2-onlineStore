@@ -81,7 +81,7 @@ router.get('/list', (req, res, next) => {
 
 // 加入到购物车
 router.post('/addCart', (req, res, next) => {
-    let userId = '100000077';
+    let userId = req.cookies.userId;
     let productId = req.body.productId;
     let User = require('../modules/users');
     User.findOne({userId: userId}, (err, userGoods) => {
