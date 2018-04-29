@@ -13,33 +13,28 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'GoodsList',
-      component:GoodsList
-    },
-    {
-      path: '/cart',
-      name: 'Cart',
-      component:Cart
-    },
-    {
-      path: '/goods',
-      name: 'GoodsList',
+      name:'GoodsList',
       component: GoodsList
     },
     {
-      path: '/address',
-      name: 'Address',
-      component:Address
+      path: '/Cart',
+      name:'Cart',
+      component: Cart
     },
     {
-      path: '/orderConfirm',
-      name: 'OrderConfirm',
-      component:OrderConfirm
+      path: '/Address',
+      name:'Address',
+      component: Address
     },
     {
-      path: '/orderSuccess',
-      name: 'OrderSuccess',
-      component:OrderSuccess
+      path: '/OrderConfirm',
+      name:'OrderConfirm',
+      component: OrderConfirm
+    },
+    {
+      path: '/OrderSuccess',
+      name:'OrderSuccess',
+      component: OrderSuccess
     }
   ]
 })

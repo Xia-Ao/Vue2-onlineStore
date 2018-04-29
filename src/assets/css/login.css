@@ -120,7 +120,8 @@ a {
 .login-wrap{
   margin-top:30px;
 }
-.md-content .btn-login{
+/*md-content*/
+.btn-login{
   display: block;
   height: 38px;
   line-height: 38px;
@@ -145,7 +146,8 @@ a {
   text-align: left;
   background: url("/static/icon.png") 0 -100px no-repeat;
 }
-.md-content .error-wrap .error-show{
+/*md-content*/
+.error-wrap .error-show{
   visibility: visible;
   height: auto;
 }

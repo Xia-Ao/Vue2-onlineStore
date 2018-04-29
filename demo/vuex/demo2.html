@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vuex</title>
+  <script src="../../node_modules/vue/dist/vue.js"></script>
+  <script src="../../node_modules/vuex/dist/vuex.min.js"></script>
+</head>
+<body>
+<div id="app">
+  <h2>{{msg}}</h2>
+  <a href="javascript:;" @click="add">点击</a>
+  <counter></counter>
+</div>
+<script>
+  const counter ={
+    template:`<div>{{count}}</div>`,
+    computed:{
+      count(){
+        return this.$store.state.count;
+      }
+    }
+  }
+  const store = new Vuex.Store({
+    state:{
+      count:10
+    },
+    mutations:{
+     increment(state){
+       state.count++;
+     }
+    }
+  });
+
+  new Vue({
+    el:'#app',
+    store,
+    data:{
+      msg:"Vuex 使用"
+    },
+    components:{
+      counter
+    },
+    methods:{
+      add(){
+        this.$store.commit("increment")
+      }
+    }
+  })
+</script>
+</body>
+</html>

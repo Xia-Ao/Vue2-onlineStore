@@ -1,21 +1,23 @@
-# imoocmall
+### Get全栈技能点 Vue2.0/Node.js/MongoDB 打造商城系统
 
-> Imooc Mall 
+[慕课网实战项目地址](http://coding.imooc.com/class/113.html)
+<br/>
+[Preview](http://www.pushishuang.cn:3000/#/)
 
-## Build Setup
+下载代码后执行：
+1. `cnpm install`
+2. 在保证mongodb服务启动的情况下执行 `node server/bin/www` ，关于mongodb的配置，参考[我的blog](http://blog.csdn.net/dick3741/article/details/78244615)
+3. `npm run dev` ，就可以打开网站实例了
 
-``` bash
-# install dependencies
-npm install
+>环境参数：
+>Vue.js 2.x、Vue Router 2.x、Axios 0.16、Vuex 2.x、Express 4.x、MongoDB
 
-# serve with hot reload at localhost:8080
-npm run dev
 
-# build for production with minification
-npm run build
 
-# build for production and view the bundle analyzer report
-npm run build --report
-```
+---
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+遗留问题：
+
+1. 价格过滤ALL不能正常点击
+2. 价格排序小箭头不能上下旋转
+3. 购物车批量删除不能正常显示剩余

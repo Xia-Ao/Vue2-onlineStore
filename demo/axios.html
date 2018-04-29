@@ -10,8 +10,8 @@
 <body>
 <div id="app" class="container">
   <h1>axios插件讲解</h1>
-  <a href="javascript:;" class="btn btn-primary" v-on:click="get">Get请求</a>
-  <a href="javascript:;" class="btn btn-primary" @click="post">Post请求</a>
+  <a href="javascript:;" class="btn btn-primary" @click="get">get请求</a>
+  <a href="javascript:;" class="btn btn-primary" @click="post">post请求</a>
   <a href="javascript:;" class="btn btn-primary" @click="http">http</a>
   <div>
     <span>{{msg}}</span>
@@ -19,68 +19,70 @@
 </div>
 <script>
   new Vue({
-    el:"#app",
+    el:'#app',
     data:{
       msg:''
     },
-    mounted: function () {
-      axios.interceptors.request.use(function (config) {
-        console.log("request init.");
-
+    mounted:function () {  //拦截器
+      axios.interceptors.request.use(function (config) {  //拦截前
+        console.log('request init.');
+        //这里可以做loading
         return config;
-      })
-      axios.interceptors.response.use(function (response) {
-        console.log("response init.");
+      });
+      axios.interceptors.response.use(function (response) {  //拦截后的处理
+        console.log('response init.');
         return response;
       })
     },
     methods:{
-      get: function () {
-        axios.get("../package1.json",{
+      get:function () {
+        axios.get('../package.json',{
           params:{
-            userId:"999"
+            userId:'999'
           },
           headers:{
-            token:"jack"
-          }
+            token:'jack'
+          },
         }).then(res=>{
-          this.msg = res.data;
+          this.msg=res.data;
         }).catch(function (error) {
-          console.log("error init."+error)
-        });
+          console.log('error init.'+error)
+        })
       },
-      post: function () {
-        axios.post("../package.json",{
+      post:function () {
+        axios.post('../package.json',{
           userId:"888"
         },{
           headers:{
-            token:"tom"
+            token:'tom'
           }
         }).then(res=>{
-          this.msg = res.data;
+          this.msg =res.data;
         }).catch(function (error) {
 
         })
       },
-      http: function () {
+      http:function () {
         axios({
-          url:"../package.json",
-          method:"get",
+          url:'../package.json',
+          method:'get',
           data:{
-            userId:"101"
+            userId:'101'  //post
           },
           params:{
-            userId:"102"
+            userId:'102' //get
           },
           headers:{
-            token:"http-test"
+            token:'http-test'
           }
+
         }).then(res=>{
-          this.msg = res.data;
+          this.msg=res.data;
         })
+
       }
     }
-  });
+  })
 </script>
 </body>
 </html>

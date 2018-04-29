@@ -150,7 +150,7 @@
   }
 
   .accessory-list.col-4 > ul > li:hover, .accessory-list.col-5 > ul > li:hover {
-    border-color: none;
+    /*border-color: none;*/
     -webkit-transform: none;
     -ms-transform: none;
     transform: none;

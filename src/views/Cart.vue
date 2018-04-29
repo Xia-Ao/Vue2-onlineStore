@@ -1,44 +1,9 @@
 <template>
   <div>
-    <header class="header">
-      <symbol id="icon-cart" viewBox="0 0 38 32">
-        <title>cart</title>
-        <path class="path1" d="M37.759 0h-4.133c-0.733 0.004-1.337 0.549-1.434 1.255l-0.546 4.342c-0.081 0.484-0.496 0.849-0.997 0.849-0.005 0-0.009-0-0.014-0h-27.604c-0.003 0-0.007-0-0.011-0-1.674 0-3.031 1.357-3.031 3.031 0 0.34 0.056 0.666 0.159 0.971l2.52 8.062c0.385 1.194 1.486 2.043 2.785 2.043 0.126 0 0.25-0.008 0.372-0.023l22.983 0.002c0.515 0.131 0.626 0.768 0.626 1.283 0.005 0.044 0.009 0.095 0.009 0.146 0 0.501-0.294 0.933-0.718 1.134l-22.439 0.003c-0.354 0-0.642 0.287-0.642 0.642s0.287 0.642 0.642 0.642h22.745l0.131-0.071c0.919-0.392 1.551-1.287 1.551-2.33 0-0.058-0.002-0.116-0.006-0.173 0.021-0.108 0.033-0.24 0.033-0.376 0-1.072-0.732-1.973-1.724-2.23l-23.357-0.004c-0.063 0.008-0.135 0.013-0.209 0.013-0.719 0-1.332-0.455-1.566-1.093l-2.53-8.095c-0.048-0.154-0.076-0.332-0.076-0.515 0-0.973 0.782-1.764 1.752-1.778h27.657c1.159-0.004 2.112-0.883 2.232-2.011l0.547-4.345c0.010-0.083 0.078-0.147 0.161-0.152l4.133-0c0.354 0 0.642-0.287 0.642-0.642s-0.287-0.642-0.642-0.642z"></path>
-        <path class="path2" d="M31.323 9.69c-0.022-0.003-0.048-0.004-0.074-0.004-0.328 0-0.598 0.248-0.633 0.567l-0.809 7.268c-0.003 0.022-0.004 0.048-0.004 0.074 0 0.328 0.248 0.598 0.567 0.633l0.074 0c0.001 0 0.003 0 0.004 0 0.327 0 0.596-0.246 0.632-0.563l0.809-7.268c0.003-0.022 0.004-0.048 0.004-0.074 0-0.328-0.248-0.598-0.567-0.633z"></path>
-        <path class="path3" d="M27.514 25.594c-1.769 0-3.203 1.434-3.203 3.203s1.434 3.203 3.203 3.203c1.769 0 3.203-1.434 3.203-3.203s-1.434-3.203-3.203-3.203zM27.514 30.717c-1.060 0-1.92-0.86-1.92-1.92s0.86-1.92 1.92-1.92c1.060 0 1.92 0.86 1.92 1.92s-0.86 1.92-1.92 1.92z"></path>
-        <path class="path4" d="M9.599 25.594c-1.769 0-3.203 1.434-3.203 3.203s1.434 3.203 3.203 3.203c1.769 0 3.203-1.434 3.203-3.203s-1.434-3.203-3.203-3.203zM9.599 30.717c-1.060 0-1.92-0.86-1.92-1.92s0.86-1.92 1.92-1.92c1.060 0 1.92 0.86 1.92 1.92s-0.86 1.92-1.92 1.92z"></path>
-      </symbol>
-      <div class="navbar">
-        <div class="navbar-left-container">
-          <a href="/">
-            <img class="navbar-brand-logo" src="static/logo.png"></a>
-        </div>
-        <div class="navbar-right-container" style="display: flex;">
-          <div class="navbar-menu-container">
-            <!--<a href="/" class="navbar-link">我的账户</a>-->
-            <span class="navbar-link"></span>
-            <a href="javascript:void(0)" class="navbar-link">Login</a>
-            <a href="javascript:void(0)" class="navbar-link">Logout</a>
-            <div class="navbar-cart-container">
-              <span class="navbar-cart-count"></span>
-              <a class="navbar-link navbar-cart-link" href="/#/cart">
-                <svg class="navbar-cart-logo">
-                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-cart"></use>
-                </svg>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
-    <div class="nav-breadcrumb-wrap">
-      <div class="container">
-        <nav class="nav-breadcrumb">
-          <a href="/">Home</a>
-          <span>Goods</span>
-        </nav>
-      </div>
-    </div>
+    <nav-header></nav-header>
+    <nav-bread>
+      <span>My Cart</span>
+    </nav-bread>
     <svg style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1"
          xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
       <defs>
@@ -94,42 +59,43 @@
               </ul>
             </div>
             <ul class="cart-item-list">
-              <li>
+              <li v-for="item in cartList">
                 <div class="cart-tab-1">
                   <div class="cart-item-check">
-                    <a href="javascipt:;" class="checkbox-btn item-check-btn">
+                    <a href="javascript:;" class="checkbox-btn item-check-btn"
+                       v-bind:class="{'check':item.checked=='1'}" @click="editCart('checked',item)">
                       <svg class="icon icon-ok">
                         <use xlink:href="#icon-ok"></use>
                       </svg>
                     </a>
                   </div>
                   <div class="cart-item-pic">
-                    <img src="/static/1.jpg">
+                    <img v-bind:src="'/static/'+item.productImage" v-bind:alt="item.productName">
                   </div>
                   <div class="cart-item-title">
-                    <div class="item-name">XX</div>
+                    <div class="item-name">{{item.productName}}</div>
                   </div>
                 </div>
                 <div class="cart-tab-2">
-                  <div class="item-price">1000</div>
+                  <div class="item-price">{{(item.salePrice) | currency('$')}}</div>
                 </div>
                 <div class="cart-tab-3">
                   <div class="item-quantity">
                     <div class="select-self select-self-open">
                       <div class="select-self-area">
-                        <a class="input-sub">-</a>
-                        <span class="select-ipt">10</span>
-                        <a class="input-add">+</a>
+                        <a class="input-sub" @click="editCart('minus',item)">-</a>
+                        <span class="select-ipt">{{item.productNum}}</span>
+                        <a class="input-add" @click="editCart('add',item)">+</a>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div class="cart-tab-4">
-                  <div class="item-price-total">100</div>
+                  <div class="item-price-total">{{(item.salePrice * item.productNum) | currency('$')}}</div>
                 </div>
                 <div class="cart-tab-5">
                   <div class="cart-item-opration">
-                    <a href="javascript:;" class="item-edit-btn">
+                    <a href="javascript:;" class="item-edit-btn" @click="delCartConfirm(item.productId)">
                       <svg class="icon icon-del">
                         <use xlink:href="#icon-del"></use>
                       </svg>
@@ -144,86 +110,171 @@
           <div class="cart-foot-inner">
             <div class="cart-foot-l">
               <div class="item-all-check">
-                <a href="javascipt:;">
-                  <span class="checkbox-btn item-check-btn">
-                      <svg class="icon icon-ok"><use xlink:href="#icon-ok"/></svg>
+                <a href="javascript:;" @click="toggleCheckAll">
+                  <span class="checkbox-btn item-check-btn" v-bind:class="{'check':checkAllFlag}">
+                    <svg class="icon icon-ok"><use xlink:href="#icon-ok"/></svg>
                   </span>
                   <span>Select all</span>
+                </a>
+              </div>
+              <div class="item-all-del">
+                <a href="javascript:;" class="item-del-btn">
+                  Delete selected
                 </a>
               </div>
             </div>
             <div class="cart-foot-r">
               <div class="item-total">
-                Item total: <span class="total-price">500</span>
+                Item total:<span class="total-price">{{totalPrice | currency('$')}}</span>
               </div>
               <div class="btn-wrap">
-                <a class="btn btn--red">Checkout</a>
+                <a href="javascript:;" class="btn btn--red" v-bind:class="{'btn--dis':checkedCount==0}"
+                   @click="checkOut">Checkout</a>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <footer class="footer">
-      <div class="footer__wrap">
-        <div class="footer__secondary">
-          <div class="footer__inner">
-            <div class="footer__region">
-              <span>Region</span>
-              <select class="footer__region__select">
-                <option value="en-US">USA</option>
-                <option value="zh-CN">China</option>
-                <option value="in">India</option>
-              </select>
-            </div>
-            <div class="footer__secondary__nav">
-              <span>Copyright © 2017 IMooc All Rights Reserved.</span>
-              <a href="http://us.lemall.com/us/aboutUs.html">
-                About Us
-              </a>
-              <a href="http://us.lemall.com/us/termsofUse.html">
-                Terms &amp; Conditions
-              </a>
-              <a href="http://us.lemall.com/us/privacyPolicy.html">
-                Privacy Policy
-              </a>
-            </div>
-          </div>
-        </div>
+    <modal :mdShow="modalConfirm" @close="closeModal">
+      <p slot="message">你确认要删除此条数据吗?</p>
+      <div slot="btnGroup">
+        <a href="javascript:;" class="btn btn--m" @click="delCart">确认</a>
+        <a href="javascript:;" class="btn btn--m" @click="modalConfirm = false">关闭</a>
       </div>
-    </footer>
+    </modal>
+    <nav-footer></nav-footer>
   </div>
 </template>
-<style>
-  .input-sub,.input-add{
-    min-width: 40px;
-    height: 100%;
-    border: 0;
-    color: #605F5F;
-    text-align: center;
-    font-size: 16px;
-    overflow: hidden;
-    display: inline-block;
-    background: #f0f0f0;
-  }
-  .item-quantity .select-self-area{
-    background:none;
-    border: 1px solid #f0f0f0;
-  }
-  .item-quantity .select-self-area .select-ipt{
-    display: inline-block;
-    padding:0 3px;
-    width: 30px;
-    min-width: 30px;
-    text-align: center;
-  }
-</style>
-<script>
-    export default{
-        data(){
-            return{
 
-            }
+
+<style>
+
+</style>
+
+<script>
+  //  import './../assets/css/checkout.css'
+  import NavHeader from '@/components/NavHeader'
+  import NavFooter from '@/components/NavFooter'
+  import NavBread from '@/components/NavBread'
+  import Modal from '@/components/Modal'
+  import axios from 'axios'
+  import {currency} from '@/util/currency'
+
+  export default {
+    data () {
+      return {
+        cartList: [],
+        productId: '',
+        modalConfirm: false
+      }
+    },
+    mounted () {
+      this.init();  //初始化这个方法
+    },
+    computed: {  //实时计算
+      checkAllFlag () {
+        return this.checkedCount == this.cartList.length;
+      },
+      checkedCount () {  //判断购物车有没选择商品
+        var i = 0;
+        this.cartList.forEach((item) => {
+          if (item.checked == '1') i++;
+        });
+        return i;
+      },
+      totalPrice () {
+        var money = 0;
+        this.cartList.forEach((item) => {
+          if (item.checked == '1') {
+            money += parseFloat(item.salePrice) * parseInt(item.productNum);
+          }
+        });
+        return money;
+      }
+    },
+    components: {
+      NavHeader,
+      NavFooter,
+      NavBread,
+      Modal
+    },
+    methods: {
+      init () {
+        axios.get('/users/cartList').then((response) => {
+          let res = response.data;
+          this.cartList = res.result;  //对商品赋值
+        });
+      },
+      closeModal () {
+        this.modalConfirm = false;
+      },
+      delCartConfirm (productId) {
+        this.productId = productId;
+//        this.delItem = item;
+        this.modalConfirm = true;
+      },
+      delCart () {
+        axios.post('/users/cartDel', {
+          productId: this.productId
+//          productId:this.delItem.productId
+        }).then((response) => {
+          let res = response.data;
+          if (res.status == '0') {
+            this.modalConfirm = false;
+            this.init();
+            this.$store.commit('updateCartCount', -this.item.productNum);
+          }
+        })
+      },
+      editCart (flag, item) {
+        if (flag == 'add') {
+          item.productNum++;
+        } else if (flag == 'minus') {
+          if (item.productNum <= 1) {
+            return;
+          }
+          item.productNum--;
+        } else {
+          item.checked = item.checked == '1' ? '0' : '1';
         }
+        axios.post('/users/cartEdit', {
+          productId: item.productId,
+          productNum: item.productNum,
+          checked: item.checked
+        }).then((response) => {
+          let res = response.data;
+          //Vuex 编辑购物车图标变化
+          let num = 0;
+          if (flag == 'add') {
+            num = 1;
+          } else if (flag == 'minus') {
+            num = -1;
+          }
+          this.$store.commit('updateCartCount', num);
+        })
+      },
+      toggleCheckAll () {
+        var flag = !this.checkAllFlag;
+        this.cartList.forEach((item) => {
+          item.checked = flag ? '1' : '0';
+        });
+        axios.post('/users/editCheckAll', {
+          checkAll: flag
+        }).then((response) => {
+          let res = response.data;
+          if (res.status == '0') {
+            console.log('update suc');
+          }
+        })
+      },
+      checkOut () {
+        if (this.checkedCount > 0) {
+          this.$router.push({  //也可以用router-link
+            path: '/address'
+          });
+        }
+      }
     }
+  }
 </script>

@@ -22,12 +22,13 @@ var proxyTable = config.dev.proxyTable
 
 var app = express()
 
-/*var goodsData = require('../mock/goods.json')
-var router = express.Router()
-router.get("/goods", function (req,res) {
+/*
+var goodsData = require('./../mock/goods.json');
+var router = express.Router();
+router.get("/goods",function (req,res,next) {
   res.json(goodsData)
-})
-app.use(router)
+});
+app.use(router);
 */
 
 var compiler = webpack(webpackConfig)
@@ -38,7 +39,8 @@ var devMiddleware = require('webpack-dev-middleware')(compiler, {
 })
 
 var hotMiddleware = require('webpack-hot-middleware')(compiler, {
-  log: () => {}
+  log: false,
+  heartbeat: 2000
 })
 // force page reload when html-webpack-plugin template changes
 compiler.plugin('compilation', function (compilation) {
