@@ -22,9 +22,102 @@ npm run build --report
 项目演示地址： [store.xiaao.xin](http://store.xiaao.xin)
 用户：admin 密码：123456
 
+### 分支
+* 源码分支source
+* 代码分支master
+
 ## 目录
 
-
+```
+.
+├── build
+│   ├── build.js
+│   ├── check-versions.js
+│   ├── logo.png
+│   ├── utils.js
+│   ├── vue-loader.conf.js
+│   ├── webpack.base.conf.js
+│   ├── webpack.dev.conf.js
+│   └── webpack.prod.conf.js
+├── config
+│   ├── dev.env.js
+│   ├── global.js
+│   ├── index.js
+│   └── prod.env.js
+├── mockData
+│   ├── dumall-goods        // 数据库备份文件
+│   ├── dumall-users        // 数据库备份文件
+│   ├── goods               // 数据库备份文件
+│   └── package.json
+├── server                  // node服务目录，严格来讲应该另起一个目录开发，实现前后端分离
+│   ├── bin
+│   │   └── www             // 服务
+│   ├── modules             // model模型
+│   │   ├── goods.js
+│   │   └── users.js
+│   ├── public          
+│   │   ├── javascripts
+│   │   │   ├── doc.js
+│   │   │   └── util.js
+│   │   └── stylesheets
+│   │       └── style.css
+│   ├── routes              // 路由
+│   │   ├── goods.js        // goods路由及接口
+│   │   ├── index.js        // 主路由
+│   │   └── users.js        // users路由及接口
+│   ├── views               // 视图
+│   │  └── index.html
+│   ├── app.js              // 主文件
+│   ├── package.json
+├── src
+│   ├── assets
+│   │   ├── check.png
+│   │   ├── css
+│   │   │   └── base.css
+│   │   └── logo.png
+│   ├── components          // 组件
+│   │   ├── address
+│   │   │   └── address.vue
+│   │   ├── cart
+│   │   │   └── cart.vue
+│   │   ├── checkProcess
+│   │   │   └── checkProcess.vue
+│   │   ├── dialog
+│   │   │   └── dialog.vue
+│   │   ├── footer
+│   │   │   └── footer.vue
+│   │   ├── goodsList
+│   │   │   └── goodsList.vue
+│   │   ├── header
+│   │   │   ├── header.vue
+│   │   │   ├── logo.png
+│   │   │   └── mi.jpeg
+│   │   ├── navBread
+│   │   │   └── navBread.vue
+│   │   ├── order
+│   │   │   └── order.vue
+│   │   └── orderFinish
+│   │       └── orderFinish.vue
+│   ├── router              // 路由配置
+│   │   └── index.js
+│   ├── store               // vuex数据仓库
+│   │   ├── index.js        // 入口文件
+│   │   └── module
+│   │       ├── cart.js     // 购物车参数
+│   │       └── global.js   // 全局参数
+│   │── util                // 工具库
+│   │   ├── currency.js
+│   │   └── util.js
+│   ├── main.js             // 主函数
+│   └── App.vue             // app.vue
+├── static
+│   ├── goods.json          // 本地模拟数据
+│   └── img                 // 图片路径 
+├── index.html
+├── README.md
+├── package.json
+└── store.conf              // nginx配置文件
+```
 ## 前端技术栈
 
 ### 插件
