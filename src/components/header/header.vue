@@ -4,7 +4,7 @@
             <div class="navbar">
                 <div class="navbar-left-container">
                     <a href="/">
-                        <img class="navbar-brand-logo" src="./logo.png"></a>
+                        <img class="navbar-brand-logo" src="./mi.jpeg"></a>
                 </div>
                 <div class="navbar-right-container">
                     <span class="item user" v-if="currentUserName">{{currentUserName}}</span>
@@ -230,8 +230,11 @@
         .navbar {
             .navbar-left-container {
                 position: absolute
-                top: -10px
-                left: 0
+                top: 0px
+                left: 10px
+                img {
+                    height: 70px
+                }
             }
             .navbar-right-container {
                 float: right

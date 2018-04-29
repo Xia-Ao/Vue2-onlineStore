@@ -1,76 +1,79 @@
 <template>
-    <div class="goods">
+    <div>
         <nav-bread>
             <span>goodsList</span>
         </nav-bread>
-        <div class="filter-nav">
-            <div class="sort">
-                <span>Sort by: </span>
-                <a @click="sortGoods()" class="defaultPrice">Default</a>
-                <a class="price-sort" @click="sortGoods(true)">Price
-                    <i class="fa" v-bind:class="{'fa-long-arrow-up' :sortFlag,'fa-long-arrow-down':!sortFlag}">
-                    </i>
-                </a>
+        <div class="goods">
+            <div class="filter-nav">
+                <div class="sort">
+                    <span>Sort by: </span>
+                    <a @click="sortGoods()" class="defaultPrice">Default</a>
+                    <a class="price-sort" @click="sortGoods(true)">Price
+                        <i class="fa" v-bind:class="{'fa-long-arrow-up' :sortFlag,'fa-long-arrow-down':!sortFlag}">
+                        </i>
+                    </a>
+                </div>
             </div>
-        </div>
-        <div class="goods-container">
-            <div class="price-filter">
-                <div class="price-title"><span>PRICE:</span></div>
-                <ul>
-                    <li class="price" v-bind:class="{'curPrice':priceChecked==='all'}"
-                        @click="setPriceFilter('all')"><span
-                        class="price-list">ALL</span></li>
-                    <li class="price" v-for="(price,index) in priceFilter" :key="price.index"
-                        @click="setPriceFilter(index)" v-bind:class="{'curPrice':priceChecked===index}">
-                        <span class="price-list">{{price.startPrice}} - {{price.endPrice}}</span>
-                    </li>
-                </ul>
-            </div>
-            <div class="goodsList">
-                <div class="goodsList-container">
-                    <li v-for="(item) in goodsList" :key="item.id">
-                        <div class="pic">
-                            <a href="#"><img v-lazy="'./../static/img/'+item.productImage" alt=""></a>
-                        </div>
-                        <div class="main">
-                            <div class="name">{{item.productName}}</div>
-                            <div class="price">{{item.salePrice | currency('￥')}}</div>
-                            <div class="addCart">
-                                <a class="btn-area" @click="addCart(item.productId)">加入购物车</a>
+            <div class="goods-container">
+                <div class="price-filter">
+                    <div class="price-title"><span>PRICE:</span></div>
+                    <ul>
+                        <li class="price" v-bind:class="{'curPrice':priceChecked==='all'}"
+                            @click="setPriceFilter('all')"><span
+                            class="price-list">ALL</span></li>
+                        <li class="price" v-for="(price,index) in priceFilter" :key="price.index"
+                            @click="setPriceFilter(index)" v-bind:class="{'curPrice':priceChecked===index}">
+                            <span class="price-list">{{price.startPrice}} - {{price.endPrice}}</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="goodsList">
+                    <div class="goodsList-container">
+                        <li v-for="(item) in goodsList" :key="item.id">
+                            <div class="pic">
+                                <a href="#"><img v-lazy="'./../static/img/'+item.productImage" alt=""></a>
                             </div>
-                        </div>
-                    </li>
-                </div>
-                <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10"
-                     class="imgLoading">
-                    <img src="./../../../static/img/loading-svg/loading-spinning-bubbles.svg" v-show="imgLoading"
-                         alt="">
+                            <div class="main">
+                                <div class="name">{{item.productName}}</div>
+                                <div class="price">{{item.salePrice | currency('￥')}}</div>
+                                <div class="addCart">
+                                    <a class="btn-area" @click="addCart(item.productId)">加入购物车</a>
+                                </div>
+                            </div>
+                        </li>
+                    </div>
+                    <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10"
+                         class="imgLoading">
+                        <img src="./../../../static/img/loading-svg/loading-spinning-bubbles.svg" v-show="imgLoading"
+                             alt="">
+                    </div>
                 </div>
             </div>
-        </div>
-        <!--购物车dialog-->
-        <el-dialog title="添加购物车" :visible.sync="cartDialogShow" width="30%" :before-close="handleClose"
-                   class="cart-dialog" center>
-            <div class="noLogin" v-if="!login">
-                <div class="tips"><span>{{cartTips}}</span></div>
-                <div>
+
+            <!--购物车dialog-->
+            <el-dialog title="添加购物车" :visible.sync="cartDialogShow" width="30%" :before-close="handleClose"
+                       class="cart-dialog" center>
+                <div class="noLogin" v-if="!login">
+                    <div class="tips"><span>{{cartTips}}</span></div>
+                    <div>
                     <span slot="footer" class="dialog-footer">
                         <el-button type="warning" @click="handleClose">关闭</el-button>
                     </span>
-                </div>
+                    </div>
 
-            </div>
-            <div class="alreadyLogin" v-if="login">
-                <div class="tips"><i class="el-icon-success"></i><span>{{cartTips}}</span></div>
-                <div>
+                </div>
+                <div class="alreadyLogin" v-if="login">
+                    <div class="tips"><i class="el-icon-success"></i><span>{{cartTips}}</span></div>
+                    <div>
                     <span slot="footer" class="dialog-footer">
                         <el-button type="primary" @click="handleClose">继续购物</el-button>
                         <el-button type="danger"><router-link to="/cart" class="toCart">查看购物车</router-link></el-button>
                     </span>
-                </div>
+                    </div>
 
-            </div>
-        </el-dialog>
+                </div>
+            </el-dialog>
+        </div>
     </div>
 </template>
 

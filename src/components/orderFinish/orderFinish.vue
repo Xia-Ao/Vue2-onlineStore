@@ -1,83 +1,85 @@
 <template>
-    <div class="orderFinish">
+    <div>
         <nav-bread>
             <span>Order Finish</span>
         </nav-bread>
-        <check-process>
-            <span>Order Finish</span>
-        </check-process>
-        <div class="content">
-            <div class="orderInfo">
-                <div class="ok-img">
-                    <img src="./../../../static/img/ok-2.png" alt="">
-                </div>
-                <div class="congratulations">
-                    Congratulations! <br>
-                    Your order is under processing!
-                </div>
-                <div class="order-id">
-                    <div class="id">
-                        <span>Order ID：{{orderInfo.orderId}}</span>
-                        <a @click="orderDetailShow=true">查看详情</a>
+        <div class="orderFinish">
+            <check-process>
+                <span>Order Finish</span>
+            </check-process>
+            <div class="content">
+                <div class="orderInfo">
+                    <div class="ok-img">
+                        <img src="./../../../static/img/ok-2.png" alt="">
                     </div>
-                    <div class="order-total">
-                        <span>Order total：{{orderInfo.orderTotal | currency('￥')}}</span>
+                    <div class="congratulations">
+                        Congratulations! <br>
+                        Your order is under processing!
                     </div>
-                </div>
-                <div class="order-detail" v-if="orderDetailShow">
-                    <ul>
-                        <li class="info-item orderId">
-                            <div class="info-title">Order ID: </div>
-                            <div class="info-content">{{orderDetail.orderId}}</div>
-                        </li>
-                        <li class="info-item addressInfo">
-                            <div class="info-title">addressInfo: </div>
-                            <div class="info-content">
-                                {{orderDetail.addressInfo.nickName}},
-                                {{orderDetail.addressInfo.userPhone}}<br>
-                                {{orderDetail.addressInfo.userAddress}}
-                            </div>
-                        </li>
-                        <li class="info-item orderTotal">
-                            <div class="info-title">Order Total: </div>
-                            <div class="info-content">{{orderDetail.orderTotal | currency('￥')}}</div>
-                        </li>
-                        <li class="info-item goodsList">
-                            <div class="info-title">goodsList: </div>
-                            <div class="info-content">
-                                <div class="goos" v-for="(item,index) in orderDetail.goodsList" :key="index">
-                                    <span>{{item.productName}}</span>
-                                    <span>{{item.salePrice | currency('￥')}}</span> x
-                                    <span>{{item.productNum}}</span>
-                                    <span>{{item.salePrice * item.productNum | currency('￥')}}</span>
+                    <div class="order-id">
+                        <div class="id">
+                            <span>Order ID：{{orderInfo.orderId}}</span>
+                            <a @click="orderDetailShow=true">查看详情</a>
+                        </div>
+                        <div class="order-total">
+                            <span>Order total：{{orderInfo.orderTotal | currency('￥')}}</span>
+                        </div>
+                    </div>
+                    <div class="order-detail" v-if="orderDetailShow">
+                        <ul>
+                            <li class="info-item orderId">
+                                <div class="info-title">Order ID: </div>
+                                <div class="info-content">{{orderDetail.orderId}}</div>
+                            </li>
+                            <li class="info-item addressInfo">
+                                <div class="info-title">addressInfo: </div>
+                                <div class="info-content">
+                                    {{orderDetail.addressInfo.nickName}},
+                                    {{orderDetail.addressInfo.userPhone}}<br>
+                                    {{orderDetail.addressInfo.userAddress}}
                                 </div>
-                            </div>
-                        </li>
-                        <li class="info-item discount">
-                            <div class="info-title">Discount: </div>
-                            <div class="info-content">{{orderDetail.discount | currency('￥')}}</div>
-                        </li>
-                        <li class="info-item tax">
-                            <div class="info-title">Freight: </div>
-                            <div class="info-content">{{orderDetail.tax | currency('￥')}}</div>
-                        </li>
-                        <li class="info-item orderStatus">
-                            <div class="info-title">Order Status: </div>
-                            <div class="info-content">{{orderDetail.orderStatus ? 'Finished' : 'unFinished'}}</div>
-                        </li>
-                        <li class="info-item createDate">
-                            <div class="info-title">Create Date: </div>
-                            <div class="info-content">{{orderDetail.createDate}}</div>
-                        </li>
-                    </ul>
-                    <div class="hiddenDetail" @click="orderDetailShow=false">
-                        收起
+                            </li>
+                            <li class="info-item orderTotal">
+                                <div class="info-title">Order Total: </div>
+                                <div class="info-content">{{orderDetail.orderTotal | currency('￥')}}</div>
+                            </li>
+                            <li class="info-item goodsList">
+                                <div class="info-title">goodsList: </div>
+                                <div class="info-content">
+                                    <div class="goos" v-for="(item,index) in orderDetail.goodsList" :key="index">
+                                        <span>{{item.productName}}</span>
+                                        <span>{{item.salePrice | currency('￥')}}</span> x
+                                        <span>{{item.productNum}}</span>
+                                        <span>{{item.salePrice * item.productNum | currency('￥')}}</span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="info-item discount">
+                                <div class="info-title">Discount: </div>
+                                <div class="info-content">{{orderDetail.discount | currency('￥')}}</div>
+                            </li>
+                            <li class="info-item tax">
+                                <div class="info-title">Freight: </div>
+                                <div class="info-content">{{orderDetail.tax | currency('￥')}}</div>
+                            </li>
+                            <li class="info-item orderStatus">
+                                <div class="info-title">Order Status: </div>
+                                <div class="info-content">{{orderDetail.orderStatus ? 'Finished' : 'unFinished'}}</div>
+                            </li>
+                            <li class="info-item createDate">
+                                <div class="info-title">Create Date: </div>
+                                <div class="info-content">{{orderDetail.createDate}}</div>
+                            </li>
+                        </ul>
+                        <div class="hiddenDetail" @click="orderDetailShow=false">
+                            收起
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="router-link">
-                <router-link to="/cart" class="link to-cart">去购物车</router-link>
-                <router-link to="/goodsList" class="link to-goods">回到商品列表</router-link>
+                <div class="router-link">
+                    <router-link to="/cart" class="link to-cart">去购物车</router-link>
+                    <router-link to="/goodsList" class="link to-goods">回到商品列表</router-link>
+                </div>
             </div>
         </div>
     </div>
@@ -191,6 +193,11 @@
                                 word-break: break-all
                             }
                         }
+                        .orderTotal {
+                            .info-content {
+                                color: #fe6962
+                            }
+                        }
                         .goodsList {
                             .goos {
                                 span {
@@ -224,7 +231,7 @@
             }
             .router-link {
                 margin-top: 30px
-                margin-bottom :30px
+                margin-bottom: 30px
                 text-align: center
                 .link {
                     display: inline-block

@@ -1,81 +1,85 @@
 <template>
-    <div class="address">
+    <div>
         <nav-bread>
             <span>Address</span>
         </nav-bread>
-        <check-process>
-            <span>Address</span>
-        </check-process>
-        <div class="content">
-            <div class="top-bar">
-                MY ADDRESS
-            </div>
-            <div class="addressList">
-                <div class="address-item address-items"
-                     v-bind:class="{'addressChecked': address.checked===true}"
-                     v-for="(address,index) in addressList" :key="index" @click="addressSelect(address.addressId)">
-                    <div class="nickName">{{address.nickName}}</div>
-                    <div class="address-detail">{{address.userAddress}}</div>
-                    <div class="postCode">{{address.userPost}}</div>
-                    <div class="phone">{{address.userPhone}}</div>
+        <div class="address">
+            <check-process>
+                <span>Address</span>
+            </check-process>
+            <div class="content">
+                <div class="top-bar">
+                    MY ADDRESS
+                </div>
+                <div class="addressList">
+                    <div class="address-item address-items"
+                         v-bind:class="{'addressChecked': address.checked===true}"
+                         v-for="(address,index) in addressList" :key="index" @click="addressSelect(address.addressId)">
+                        <div class="nickName">{{address.nickName}}</div>
+                        <div class="address-detail">{{address.userAddress}}</div>
+                        <div class="postCode">{{address.userPost}}</div>
+                        <div class="phone">{{address.userPhone}}</div>
 
-                    <div class="defaultAddress" v-if="address.defaultAddress==='1'">默认地址</div>
-                    <div class="operating">
+                        <div class="defaultAddress" v-if="address.defaultAddress==='1'">默认地址</div>
+                        <div class="operating">
                         <span class="edit" @click.stop="addressOp('addressForm','edit',address)"><i
                             class="el-icon-edit"></i></span>
-                        <span class="delete" @click.stop="deleteAddress(address)"><i class="el-icon-delete"></i></span>
+                            <span class="delete" @click.stop="deleteAddress(address)"><i
+                                class="el-icon-delete"></i></span>
+                        </div>
                     </div>
-                </div>
-                <div class="address-item addressAdd" @click="addressOp('addressForm','add')">
-                    <div class="newAddress">
-                        <span class="add"><i class="el-icon-plus"></i></span><br>
-                        <span>Add New Address</span>
+                    <div class="address-item addressAdd" @click="addressOp('addressForm','add')">
+                        <div class="newAddress">
+                            <span class="add"><i class="el-icon-plus"></i></span><br>
+                            <span>Add New Address</span>
+                        </div>
                     </div>
                 </div>
             </div>
+            <div class="next">
+                <el-button class="next-btn" type="danger" @click="confirm">Next</el-button>
+            </div>
+
+            <!--添加地址-->
+            <el-dialog v-bind:title="addressType ? '新增地址': '修改地址'" :visible.sync="addressDialogVisible" width="30%"
+                       center
+                       class="dialog-login">
+
+                <el-form ref="addressForm" :model="addressForm" status-icon :rules="addressRules" label-width="80px"
+                         class="demo-ruleForm">
+                    <el-form-item label="地址ID" prop="addressId">
+                        <el-input v-model="addressForm.addressId" v-bind:disabled="!addressType"></el-input>
+                    </el-form-item>
+                    <el-form-item label="用户名" prop="nickName">
+                        <el-input v-model="addressForm.nickName"></el-input>
+                    </el-form-item>
+                    <el-form-item label="手机号" prop="userPhone">
+                        <el-input v-model="addressForm.userPhone"></el-input>
+                    </el-form-item>
+                    <el-form-item label="邮编" prop="userPost">
+                        <el-input v-model="addressForm.userPost"></el-input>
+                    </el-form-item>
+                    <el-form-item label="地址" prop="userAddress">
+                        <el-input type="textarea" v-model="addressForm.userAddress"></el-input>
+                    </el-form-item>
+                    <el-form-item label="默认地址" prop="defaultAddress">
+                        <el-radio-group v-model="addressForm.defaultAddress">
+                            <el-radio label="1">是</el-radio>
+                            <el-radio label="0">否</el-radio>
+                        </el-radio-group>
+                    </el-form-item>
+
+                    <el-form-item>
+                        <el-button type="primary" @click="submitAddressForm('addressForm',addressType)">
+                            {{addressType ? '添加' : '修改'}}
+                        </el-button>
+                        <el-button @click="resetForm('addressForm')">重置</el-button>
+                    </el-form-item>
+                </el-form>
+
+            </el-dialog>
+
         </div>
-        <div class="next">
-            <el-button class="next-btn" type="danger" @click="confirm">Next</el-button>
-        </div>
-
-        <!--添加地址-->
-        <el-dialog v-bind:title="addressType ? '新增地址': '修改地址'" :visible.sync="addressDialogVisible" width="30%" center
-                   class="dialog-login">
-
-            <el-form ref="addressForm" :model="addressForm" status-icon :rules="addressRules" label-width="80px"
-                     class="demo-ruleForm">
-                <el-form-item label="地址ID" prop="addressId">
-                    <el-input v-model="addressForm.addressId" v-bind:disabled="!addressType"></el-input>
-                </el-form-item>
-                <el-form-item label="用户名" prop="nickName">
-                    <el-input v-model="addressForm.nickName"></el-input>
-                </el-form-item>
-                <el-form-item label="手机号" prop="userPhone">
-                    <el-input v-model="addressForm.userPhone"></el-input>
-                </el-form-item>
-                <el-form-item label="邮编" prop="userPost">
-                    <el-input v-model="addressForm.userPost"></el-input>
-                </el-form-item>
-                <el-form-item label="地址" prop="userAddress">
-                    <el-input type="textarea" v-model="addressForm.userAddress"></el-input>
-                </el-form-item>
-                <el-form-item label="默认地址" prop="defaultAddress">
-                    <el-radio-group v-model="addressForm.defaultAddress">
-                        <el-radio label="1">是</el-radio>
-                        <el-radio label="0">否</el-radio>
-                    </el-radio-group>
-                </el-form-item>
-
-                <el-form-item>
-                    <el-button type="primary" @click="submitAddressForm('addressForm',addressType)">
-                        {{addressType ? '添加' : '修改'}}
-                    </el-button>
-                    <el-button @click="resetForm('addressForm')">重置</el-button>
-                </el-form-item>
-            </el-form>
-
-        </el-dialog>
-
     </div>
 </template>
 

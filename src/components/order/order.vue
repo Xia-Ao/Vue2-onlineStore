@@ -1,65 +1,67 @@
 <template>
-    <div class="order">
+    <div>
         <nav-bread>
             <span>Order Confirm</span>
         </nav-bread>
-        <check-process>
-            <span>Order Confirm</span>
-        </check-process>
-        <div class="content">
-            <div class="cartList">
-                <div class="cart-table">
-                    <div class="cart-header">
-                        <ul>
-                            <li class="items">ITEMS</li>
-                            <li class="price">PRICE</li>
-                            <li class="quantity">QUANTITY</li>
-                            <li class="subtotal">SUBTOTAL</li>
-                        </ul>
-                    </div>
-                    <div class="cart-content">
-                        <div class="goods" v-for="(item,index) in goods" :key="index">
+        <div class="order">
+            <check-process>
+                <span>Order Confirm</span>
+            </check-process>
+            <div class="content">
+                <div class="cartList">
+                    <div class="cart-table">
+                        <div class="cart-header">
                             <ul>
-                                <li class="items">
-                                    <div class="product-img">
-                                        <img v-lazy="'./../static/img/'+item.productImage" alt="">
-                                    </div>
-                                    <div class="productName">
-                                        <span>{{item.productName}}</span>
-                                    </div>
-                                </li>
-                                <li class="price">{{item.salePrice | currency('￥')}}</li>
-                                <li class="quantity">
-                                    <span>x {{item.productNum}}</span>
-                                </li>
-                                <li class="subtotal">{{item.salePrice * item.productNum | currency('￥')}}</li>
+                                <li class="items">ITEMS</li>
+                                <li class="price">PRICE</li>
+                                <li class="quantity">QUANTITY</li>
+                                <li class="subtotal">SUBTOTAL</li>
                             </ul>
                         </div>
+                        <div class="cart-content">
+                            <div class="goods" v-for="(item,index) in goods" :key="index">
+                                <ul>
+                                    <li class="items">
+                                        <div class="product-img">
+                                            <img v-lazy="'./../static/img/'+item.productImage" alt="">
+                                        </div>
+                                        <div class="productName">
+                                            <span>{{item.productName}}</span>
+                                        </div>
+                                    </li>
+                                    <li class="price">{{item.salePrice | currency('￥')}}</li>
+                                    <li class="quantity">
+                                        <span>x {{item.productNum}}</span>
+                                    </li>
+                                    <li class="subtotal">{{item.salePrice * item.productNum | currency('￥')}}</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="order-list">
-                    <div class="settlement">
-                        <li class="">
-                            <span class="info-title">Item subtotal :</span>
-                            <span class="info-content">{{subtotal | currency('￥')}}</span>
-                        </li>
-                        <li class="">
-                            <span class="info-title">Discount :</span>
-                            <span class="info-content">{{discount | currency('￥')}}</span>
-                        </li>
-                        <li class="">
-                            <span class="info-title">Tax :</span>
-                            <span class="info-content">{{tax | currency('￥')}}</span>
-                        </li>
-                        <li class="">
-                            <span class="info-title">Order total :</span>
-                            <span class="info-content totalPrice">{{totalPrice | currency('￥')}}</span>
-                        </li>
+                    <div class="order-list">
+                        <div class="settlement">
+                            <li class="">
+                                <span class="info-title">Item subtotal :</span>
+                                <span class="info-content">{{subtotal | currency('￥')}}</span>
+                            </li>
+                            <li class="">
+                                <span class="info-title">Discount :</span>
+                                <span class="info-content">{{discount | currency('￥')}}</span>
+                            </li>
+                            <li class="">
+                                <span class="info-title">Tax :</span>
+                                <span class="info-content">{{tax | currency('￥')}}</span>
+                            </li>
+                            <li class="">
+                                <span class="info-title">Order total :</span>
+                                <span class="info-content totalPrice">{{totalPrice | currency('￥')}}</span>
+                            </li>
+                        </div>
                     </div>
-                </div>
-                <div class="btnClick">
-                    <el-button type="danger" class="previous" @click="previous">Previous</el-button>
-                    <el-button type="danger" class="next" @click="pay">Next</el-button>
+                    <div class="btnClick">
+                        <el-button type="danger" class="previous" @click="previous">Previous</el-button>
+                        <el-button type="danger" class="next" @click="pay">Next</el-button>
+                    </div>
                 </div>
             </div>
         </div>
